@@ -1,2 +1,2 @@
 # Python-projects
-our team's python projects 
+Our team's python projects 
