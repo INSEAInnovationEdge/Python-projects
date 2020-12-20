@@ -29,8 +29,21 @@ def win_check(x_cells, o_cells, the_round):
     -ouput:
     returns True if the player won or not
     '''
-    # to do 
-    pass
+    
+    player_cells = x_cells if the_round%2 == 1 else o_cells
+
+    lines   = [(1+(i*3), 2+(i*3), 3+(i*3)) for i in range(3)]
+    columns = [(i, i+3 , i+6) for i in range(1,4)]
+    diags   = [(1,5,9),(7,5,3)]
+
+    win_postions = [set(position) for layout in [lines, columns, diags] for position in layout]
+
+    for position in win_postions:
+        if position.issubset(player_cells):
+            player = 'x' if the_round%2 == 1 else 'o'
+            show(x_cells, o_cells) 
+            print(f'\n{player} wins !')
+            return True 
 
 def show(x_cells, o_cells):
     ''' 
@@ -41,8 +54,14 @@ def show(x_cells, o_cells):
     -ouput:
     prints the layout of the board shape above (doesn't return anything)
     '''
-    # to do 
-    pass
+     
+    def charcter(x):
+        if x in x_cells:
+            return ' x '
+        elif x in o_cells:
+            return ' o '
+        return '   '
+    print('\n-----------\n'.join('|'.join(list(map(charcter,(1+(i*3), 2+(i*3), 3+(i*3))))) for i in range(3)))
 
 
 def valid_cell(x_cells, o_cells):
@@ -56,8 +75,19 @@ def valid_cell(x_cells, o_cells):
     -ouput:
     return the valid cell entered by the user 
     '''
-    # to do 
-    return 'change this'
+
+    while True:
+        cell = input('what cell do you choose: ')
+    if cell.isdigit():
+        cell = int(cell)
+        if not cell in x_cells and not cell in o_cells and 1 <= cell <= 9:
+            print()
+            return cell
+        else:
+            print('not available, try again !')
+    else:
+        print('give a valid number, try again !')
+    
 
 def tic_tac_toe():
     ''' this is the body of the game use the function above to make it work'''
